@@ -182,10 +182,11 @@ angular.module('ngPopover', [])
 				var useParentWidth = options.useparentwidth || false;
 				var anchorSelector = options.anchorselector || '';
 				var maxWidth = options.maxwidth || null;
+				var parsejson = options.parsejson || false;
 
 				if (options.data) {
 					scope = scope.$new();
-					scope.rrData = options.data;
+					scope.rrData = parsejson ? JSON.parse(options.data) : options.data;
 				}
 
 				var setupClick = function() {
