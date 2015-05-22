@@ -176,18 +176,22 @@ angular.module('ngPopover', [])
 				if (!template) {
 					template = options.template || options.ngPopover;
 				}
-				var placement = options.placement || 'bottom';
-				var maximize = options.maximize || false;
-				var title = options.title || '';
-				var useParentWidth = options.useparentwidth || false;
-				var anchorSelector = options.anchorselector || '';
-				var maxWidth = options.maxwidth || null;
-				var parsejson = options.parsejson || false;
+                var placement = options.placement || 'bottom';
+                var maximize = options.maximize || false;
+                var title = options.title || '';
+                var useParentWidth = options.useparentwidth || false;
+                var anchorSelector = options.anchorselector || '';
+                var maxWidth = options.maxwidth || null;
+                var evalEl = options.evalEl || false;
 
-				if (options.data) {
-					scope = scope.$new();
-					scope.rrData = parsejson ? JSON.parse(options.data) : options.data;
-				}
+                if (options.data) {
+                    scope = scope.$new();
+                    if(evalEl){
+                        scope.rrData = evalEl=='parent' ? scope.$parent.$eval(options.data) : scope.$eval(options.data);
+                    }else{
+                        scope.rrData = options.data;
+                    }
+                }
 
 				var setupClick = function() {
 					$('body').append("<div id='ng-popover' style='display:none'>" + 
